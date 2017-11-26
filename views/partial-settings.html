@@ -1,0 +1,108 @@
+
+
+    <md-content flex>
+        <h1>Configuration Settings</h1>
+
+        <p>The following settings should only be changed when initially setting this application up.</p>
+
+
+        <md-toolbar >
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Connection Settings (all required)</h2>
+
+            </div>
+        </md-toolbar>
+
+        <form name="vm.settingsform">
+
+            <md-input-container class="md-block">
+                <label>Username</label>
+                <input type="text" name="username" ng-model="vm.settings.username" required>
+                <div ng-messages="vm.settingsform.username.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Password</label>
+                <input type="text" ng-model="vm.settings.password" name="password" required>
+                <div ng-messages="vm.settingsform.password.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Server Address</label>
+                <input type="text" ng-model="vm.settings.serverendpoint" name="serverendpoint" required>
+                <div ng-messages="vm.settingsform.serverendpoint.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" ng-show="vm.settings.toms_enabled">
+                <label>TOMS Server Address</label>
+                <input type="text" ng-model="vm.settings.tomsserverendpoint"    >
+            </md-input-container>
+
+            <md-input-container class="md-block" ng-show="vm.settings.serverendpoint && vm.settings.username && vm.settings.password">
+                <label>Factory - select to set current factory</label>
+                <md-select ng-model="vm.settings.factory">
+                    <md-option ng-repeat="item in vm.settings.factories" value="{{item}}">{{item}}
+                    </md-option>
+                </md-select>
+
+            </md-input-container>
+                <md-input-container class="md-block" ng-show="vm.settings.departments.length>0">
+                <label>Departments - select to set current department</label>
+                <md-select ng-model="vm.settings.current_department">
+                    <md-option ng-repeat="item in vm.settings.departments| filter:vm.filterFn" value="{{item.stage}}">{{item.stage}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            </md-input-container>
+                <md-input-container class="md-block" >
+                    <md-switch ng-model="vm.settings.toms_enabled" aria-label="TOMS Enabled">
+                        TOMS Enabled
+                    </md-switch>
+                    <md-switch ng-model="vm.settings.security_check"
+                               aria-label="Security Check Enabled">
+                        Security Check Enabled
+                    </md-switch>
+
+             </md-input-container>
+
+            <div layout="column" layout-align="center center">
+                <div layout="row">
+                <md-button class="md-raised md-primary" ng-click="vm.login()" ng-disabled="vm.settingsform.$invalid" ng-hide="vm.settings.departments.length>0"  style="padding:20px">
+                    Save & test connection
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="vm.saveSettings()" ng-disabled="vm.settingsform.$invalid" ng-show="vm.settings.departments.length>0" style="padding:20px">
+                    Save Settings
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="vm.getDepartments()" style="padding:20px" ng-show="vm.settings.serverendpoint && vm.settings.username && vm.settings.password">
+                    Get Departments
+                </md-button>
+                <md-button class="md-raised md-primary" ng-click="vm.restart()" style="padding:20px">
+                    Restart Application
+                </md-button>
+                </div>
+
+                <div layout="row" ng-show="vm.saveError" flex>
+                    <md-toolbar class="md-warn" >
+                        <div class="md-toolbar-tools">
+                            <h2 class="md-flex">{{vm.saveError}}</h2>
+                        </div>
+                    </md-toolbar>
+
+                </div>
+            </div>
+
+    </form>
+        <div layout="row" layout-margin layout-padding ng-show="settingsUpdate" class="succ">
+            <div flex="100">
+                <h2>Settings updated. The application will now restart.</h2>
+            </div>
+        </div>
+
+        </md-content>

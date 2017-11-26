@@ -1,0 +1,12 @@
+<!--partial-scan.tpml-->
+<div id="mainbody" layout="column" layout-fill layout-align="center center">
+   <div id="outdiv"></div>
+    <md-button class="md-raised middleButton" ng-click="vm.change_state('scan home')">
+        <h3 >Cancel</h3>
+    </md-button>
+    <!--Required to store the image from the scan-->
+
+</div>
+
+<canvas style="visibility:hidden;position: absolute;margin-left: -10000px" id="qr-canvas" width="400"
+        height="400"></canvas>

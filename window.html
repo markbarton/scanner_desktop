@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ng-app="scanner" ng-csp>
+<head>
+     <link rel="stylesheet" href="assets/css/angular-material.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/progress.css"/>
+    <link rel="stylesheet" href="assets/css/loading-bar.css"/>
+    <link rel="stylesheet" href="assets/material-design-iconic-font/dist/css/material-design-iconic-font.min.css"/>
+
+</head>
+
+<body>
+<div ng-controller="primaryController as vm" layout="column" class="full-height">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row">
+        <span flex>
+            <img src="/assets/images/logo.png"  style="float:left;margin-right:20px"/>
+                <h1 class="md-display-3" style="font-weight: bold;font-size:26px">
+                    Production Tracker {{vm.settings.factory}}
+                </h1>
+
+        </span>
+
+        <span flex style="text-align:right">
+                  <md-button ng-show="vm.settings.current_department" class="md-raised md-padd-left"
+                             ng-click="vm.change_state('scan home')"> Home
+                      <ng-md-icon class="button-icon-padding" icon="home"></ng-md-icon>
+                  </md-button>
+            <md-button ng-show="vm.settings.current_department" class="md-raised md-padd-left"
+                             ng-click="vm.change_state('scan')"> Scan
+                      <ng-md-icon class="button-icon-padding" icon="videocam"></ng-md-icon>
+                  </md-button>
+                <md-button ng-show="vm.settings.current_department" class="md-raised md-padd-left"
+                           ng-click="vm.change_state('manual')"> Manual
+                    <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon>
+                </md-button>
+                <md-button ng-show="vm.settings.current_department" class="md-raised md-padd-left"
+                           ng-click="vm.change_state('report')"> Department Report
+                    <ng-md-icon class="button-icon-padding" icon="input"></ng-md-icon>
+                </md-button>
+                <md-button class="md-raised md-padd-left" ng-click="vm.change_state('settings')"> Settings
+                    <ng-md-icon class="button-icon-padding" icon="settings_applications"></ng-md-icon>
+                </md-button>
+          </span>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" flex class="md-padding" >
+       <div ui-view></div>
+    </md-content>
+
+
+    <md-toolbar>
+        <h2 class="md-toolbar-tools md-toolbar-tools-bottom">
+
+            <span flex>{{vm.settings.version}}</span>
+
+            <span flex style="text-align:center">
+
+               <div class="station-header" ng-show="vm.settings.current_department">{{vm.settings.current_department}}
+                   Department <span ng-show="vm.settings.current_user">
+                       - ({{vm.settings.current_user}})</span>
+               </div><span ng-hide="vm.settings.current_department">No department set</span>
+
+        </span>
+
+            <span flex>
+            <img src="/assets/images/machurian.png" style="float: right"/>
+            </span>
+
+        </h2>
+        <div keypress-events></div>
+    </md-toolbar>
+</div>
+
+
+</body>
+<script src="lib/qrcode.js"></script>
+<script src="lib/wijmo.min.js"></script>
+
+<script src="lib/wijmo.chart.min.js"></script>
+<script src="lib/wijmo.gauge.min.js"></script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/wijmo.angular.min.js"></script>
+<script src="lib/angular/angular-animate.min.js"></script>
+<script src="lib/angular/angular-aria.min.js"></script>
+<script src="lib/angular/angular-material.min.js"></script>
+<script src="lib/angular/angular-material-icons.min.js"></script>
+<script src="lib/angular/angular-ui-router.min.js"></script>
+<script src="lib/angular/loading-bar.min.js"></script>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="controllers/primary-controller.js"></script>
+<script src="controllers/home-controller.js"></script>
+<script src="controllers/settings-controller.js"></script>
+<script src="controllers/scan-controller.js"></script>
+<script src="controllers/scan-result-controller.js"></script>
+<script src="controllers/manual-controller.js"></script>
+<script src="controllers/report-controller.js"></script>
+<script src="services/qrFactory.js"></script>
+<script src="services/orderconfig.js"></script>
+<script src="services/orderid.js"></script>
+<script src="services/settings2.js"></script>
+<script src="services/currentorder.js"></script>
+<script src="services/log.js"></script>
+</html>

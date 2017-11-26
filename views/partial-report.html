@@ -1,0 +1,71 @@
+<!--partial-config.tpml-->
+<div id="mainbody">
+   <md-content layout-padding>
+        <div layout="row" >
+            <div flex class="report-total" style="background-color: black;">Total>> {{vm.reportData.length}}</div>
+            <div flex class="report-total label-danger">Department Late>> {{vm.department_late}}</div>
+            <div flex class="report-total label-warning">Department Warning>> {{vm.department_warning}}</div>
+            <!--<div flex class="report-total label-danger">Late>> {{vm.late}}</div>-->
+            <!--<div flex class="report-total label-danger">Warning>> {{vm.warning}}</div>-->
+        </div>
+           <table class="result-table striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>In</th>
+                <th>Target</th>
+                <th>Order ID</th>
+                <th>Order Type</th>
+                <th>Customer</th>
+                <th>Orthotist</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in vm.reportData" valign="middle">
+
+                <td style="border-right:0px solid white">
+                    <span class="label" ng-show="order.hotline" ng-class="{'label-danger':order.hotline}">Hotline</span><br/>
+                    <span class="label" ng-show="order.priority" ng-class="{'label-success':order.priority}">Priority</span><br/>
+                    <span class="label" ng-show="order.onhold" ng-class="{'label-warning':order.onhold}">On Hold</span>
+                </td>
+
+                <td style="border-left:0px solid white" class="scan_in">
+                    {{order.currentScanInDateTime}}
+                    <div class="duration" ng-class="{'label-danger':order.daysAfterScan>4,'label-warning':order.daysAfterScan>2}">
+                       {{order.daysAfterScan}} Days
+                    </div>
+                    <div class="hotline_reason" ng-show="order.hotline_reason">{{order.hotline_reason}}</div>
+                </td>
+                <td style="text-align: center;border-left:0px solid white" class="scan_in">
+                    {{order.manDate}}
+                    <div class="duration" ng-class="{'label-danger':order.daysBeforeManufacture<1,'label-warning':order.daysBeforeManufacture<4}">
+                        {{order.daysBeforeManufacture}} Days
+                    </div>
+                </td>
+
+                <td>
+                    {{order.orderid}}
+                </td>
+                <td>
+                    {{order.ordertype}}
+                </td>
+                <td>
+                    {{order.customer}}
+                </td>
+                <td>
+                    {{order.orthotist}}
+                </td>
+                <td>
+                    <md-button class="md-raised md-accent"
+                               ng-click="vm.lookupOrder(order.orderid)"
+                    >
+                        <h3 style="margin: 10px 15px;"><i class="zmdi zmdi-open-in-new"></i> Open</h3>
+                    </md-button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </md-content>
+</div>

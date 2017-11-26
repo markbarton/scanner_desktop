@@ -1,0 +1,18 @@
+<!--partial-config.tpml-->
+<div id="mainbody">
+    <md-content layout-padding style="height: 100%;padding: 24px;">
+        <h1>Manual Scan</h1>
+        <p>Enter the Order Reference e.g. ALES-9LPK9Y</p>
+        <md-input-container>
+            <label>Order Reference</label>
+            <input type="text" ng-model="vm.manual.code" required>
+        </md-input-container>
+        <div layout="column" layout-fill layout-align="center center">
+        <md-button class="md-raised middleButton" style="margin-top: 15px" ng-click="vm.lookupOrder()" ng-disabled="vm.manual.code==''">
+            <h3>Submit</h3>
+        </md-button>
+        </div>
+
+        <div change-station></div>
+    </md-content>
+</div>

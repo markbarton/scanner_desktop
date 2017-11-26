@@ -1,0 +1,28 @@
+{
+  "name": "Trulife Scanner v2",
+  "description": "Production Tracking System v2",
+  "version": "3.82",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": [
+        "background.js"
+      ]
+    }
+  },
+  "icons": {
+    "128": "/assets/images/icon.png"
+  },
+  "permissions": [
+    "accessibilityFeatures.read",
+    "accessibilityFeatures.modify",
+    "videoCapture",
+    "fullscreen",
+    "storage",
+    "http://192.168.1.88/",
+    "http://192.168.1.3/",
+    "http://192.168.1.45/",
+    "http://83.167.179.42/"
+  ],
+  "kiosk_enabled": true
+}

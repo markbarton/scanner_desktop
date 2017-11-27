@@ -13,12 +13,12 @@
     </div>
     <div layout="row" >
         <md-button flex="40"
-                   ng-repeat="items in vm.settings.departments | filter:vm.filterFnExternal"
-                   ng-class="{'md-primary':vm.settings.current_department===items.stage}"
+                   ng-repeat="items in vm.settings.departments"
+                   ng-class="{'md-primary':vm.settings.current_department.name===items.name}"
                    class="md-raised"
                    style="margin:20px; width:389px !important;"
-                   ng-click="vm.saveDepartment(items.stage)">
-            <h3>{{items.stage}}</h3>
+                   ng-click="vm.saveDepartment(items)">
+            <h3>{{items.name}}</h3>
         </md-button>
 
     </div>

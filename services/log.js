@@ -4,7 +4,6 @@
 
 angular.module('scanner').service('log', function (settings) {
     var log = {};
-    console.log('here')
     log.logMsg = function (msg) {
         if (settings.log_enabled == true) {
             console.log(msg);

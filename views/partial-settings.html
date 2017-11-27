@@ -47,7 +47,8 @@
             <md-input-container class="md-block" ng-show="vm.settings.serverendpoint && vm.settings.username && vm.settings.password">
                 <label>Factory - select to set current factory</label>
                 <md-select ng-model="vm.settings.factory">
-                    <md-option ng-repeat="item in vm.settings.factories" value="{{item}}">{{item}}
+                    <md-option ng-repeat="item in vm.settings.factories"
+                               ng-value="item">{{item.name}}
                     </md-option>
                 </md-select>
 
@@ -55,7 +56,8 @@
                 <md-input-container class="md-block" ng-show="vm.settings.departments.length>0">
                 <label>Departments - select to set current department</label>
                 <md-select ng-model="vm.settings.current_department">
-                    <md-option ng-repeat="item in vm.settings.departments| filter:vm.filterFn" value="{{item.stage}}">{{item.stage}}
+                    <md-option ng-repeat="item in vm.settings.departments"
+                               ng-value="{{item}}">{{item.name}}
                     </md-option>
                 </md-select>
             </md-input-container>

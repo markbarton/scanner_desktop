@@ -18,32 +18,32 @@
         <table cellpadding="7" cellspacing="0" width="95%" class="ordersummary">
             <tr>
                 <td class="summarylabel">Order ID</td>
-                <td class="content">{{vm.current_order.orderid}}</td>
+                <td class="content">{{vm.current_order.order_id}}</td>
             </tr>
             <tr>
                 <td class="summarylabel">Order Type</td>
-                <td class="content">{{vm.current_order.ordertype}}</td>
+                <td class="content">{{vm.current_order.toms_data.order_config.title}}</td>
             </tr>
             <tr>
                 <td class="summarylabel">Order Source</td>
-                <td class="content">{{vm.current_order.source}}</td>
+                <td class="content">{{vm.current_order.toms_data.order_config.source}}</td>
             </tr>
             <tr>
                 <td class="summarylabel">Orthotist</td>
-                <td class="content">{{vm.current_order.orthotist}}</td>
+                <td class="content">{{vm.current_order.toms_data.orthotist.username}}</td>
             </tr>
             <tr>
                 <td class="summarylabel">Customer</td>
-                <td class="content">{{vm.current_order.customer}}</td>
+                <td class="content">{{vm.current_order.toms_data.hospital.name}}</td>
             </tr>
             <tr>
                 <td class="summarylabel">Patient</td>
-                <td class="content">{{vm.current_order.patient}}</td>
+                <td class="content">{{vm.current_order.toms_data.patient.grid_label_patient_fields}}</td>
             </tr>
 
             <tr>
                 <td class="summarylabel">SAP Number</td>
-                <td class="content">{{vm.current_order.sap}}</td>
+                <td class="content">{{vm.current_order.toms_data.sap_no}}</td>
             </tr>
             <tr ng-show="vm.current_order.currentUser">
                 <td class="summarylabel">Scanned By</td>
@@ -127,15 +127,15 @@
                 <td width="100">Out</td>
                 <td width="100">Count</td>
             </tr>
-            <tr ng-repeat="stages in vm.current_order.stageInformation"
-                ng-class="(vm.current_order.currentStage===stages.stageKey) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
+            <tr ng-repeat="stages in vm.current_order.section_history"
+                ng-class="(vm.current_order.current_section.section===stages.section._id) ? 'curr-bordered' :(stages.in!=='') ? 'succ-bordered' : ''"
                 style="height: 1.9em">
                 <td style="font-weight:bold;text-align: right"><img src="/assets/images/hand.png"
                                                                     ng-if="stages.onhold"/>
-                    {{stages.stageName}}
+                    {{stages.section.name}}
                     <span ng-if="stages.onhold"> (On Hold)</span></td>
-                <td align="center"> {{stages.in}}</td>
-                <td align="center"> {{stages.out}}</td>
+                <td align="center"> {{stages.check_in.date_time}}</td>
+                <td align="center"> {{stages.check_out.date_time}}</td>
                 <td align="center"> {{stages.count}}</td>
             </tr>
         </table>
@@ -194,18 +194,18 @@
             </md-option>
         </md-select>
     </div>-->
-    <div flex="10" ng-show="vm.hasButton('out')">
+    <div flex="10" >
         <h3>Next Department</h3>
         <ng-md-icon class="button-icon-padding" icon="forward" size="64"
                     style="fill: #fff"></ng-md-icon>
     </div>
-    <div flex="70" ng-show="vm.hasButton('out')">
+    <div flex="70" >
 
         <md-button class="md-raised md-accent"
-                   ng-repeat="items in vm.settings.departments | filter:vm.filterFn | filter:vm.filterCurrentDepartment | filter:vm.filterRemoveDispatch"
-                   ng-click="vm.sendCommand('out',items.stage)"
+                   ng-repeat="items in vm.settings.departments"
+                   ng-click="vm.scan_in(items)"
         >
-            <h3 style="margin: 20px 30px;">{{items.stage}}</h3>
+            <h3 style="margin: 20px 30px;">{{items.name}}</h3>
         </md-button>
 
     </div>

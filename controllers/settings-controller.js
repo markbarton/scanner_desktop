@@ -17,9 +17,12 @@
       // handle it here. e.g.:
       vm.settings = settings;
     });
+    if(!vm.settings){
+      settings.getSettingsFromLocalVariables('scanner_settings');
+    }
 
     $scope.$watch(
-      "vm.settings.factory",
+      "vm.factory",
       function handleFooChange(newValue, oldValue) {
         //Get list of departments if we have password,username and endpoint etc
         if (vm.settings.username && vm.settings.password && vm.settings.serverendpoint) {
@@ -111,44 +114,12 @@
 
     vm.saveSettings = function () {
       log.logMsg("Saving Settings");
-      //Test Connection First
-      vm.displayLoading = true;
-      log.logMsg("Testing Configuration");
-      vm.saveError = ''
-//Test Connection First
-      orderconfig.testConnection().then(function success(data) {
-          log.logMsg("Success connecting");
-          settings.network_status = true;
-          saveLocalStorage('scan home');
-        },
-        function error(err) {
-          vm.displayLoading = false;
-
-          vm.saveError = 'Network Problem - it has not been possible to contact the server - is the Endpoint Correct?'
-          if (err.status === 401) {
-            vm.saveError = 'Not Authorised - Possible incorrect Username & Password'
-          }
-          $mdDialog.show(
-            $mdDialog.alert()
-              .parent(angular.element(document.querySelector('body')))
-              .clickOutsideToClose(true)
-              .title('Connection Error')
-              .textContent(vm.saveError)
-              .ok('Ok!')
-          );
-        })
+      saveLocalStorage('scan home');
     }
 
     vm.restart = function () {
       chrome.runtime.reload();
     }
-
-    vm.filterFn = function (ob) {
-      if (ob.selectable == 'Yes') {
-        return true; // this will be listed in the results
-      }
-      return false; // otherwise it won't be within the results
-    };
 
     function saveLocalStorage(view) {
       //if view is passed we are changing state

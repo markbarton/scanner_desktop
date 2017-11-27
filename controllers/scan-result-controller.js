@@ -105,15 +105,15 @@
 
     function getOrderDetails(orderid) {
       vm.errMsg = ''
-      orderconfig.sendCommand(orderid, 'check').then(function (_data) {
-        if (_data.data.order) {
-          log.logMsg("Success in getting Order " + _data.data.order.orderid);
-          vm.current_order = _data.data.order;
+      orderconfig.get_order(orderid).then(function (_data) {
+        if (_data.data._id) {
+          log.logMsg("Success in getting Order " + orderid);
+          vm.current_order = _data.data;
         }
         else {
           log.logMsg("ERROR >> No Order found but we got a HTTP 200");
           //Need to display error
-          vm.errMsg = 'No Order Information was found for ' + vm.current_order.orderid
+          vm.errMsg = 'No Order Information was found for ' + vm.current_order.order_id
         }
         ;
       }, function (err) {
@@ -155,7 +155,7 @@
     };
     vm.filterCurrentDepartment = function (obj) {
       // Do some tests
-      if (obj.stage !== settings.current_department) {
+      if (obj.name !== settings.current_department.name) {
         return true; // this will be listed in the results
       }
 
@@ -172,6 +172,29 @@
 
     vm.outDepartment = ""
 
+    vm.scan_in = function(out_department){
+      orderconfig.scan_in(vm.current_order.orderid, out_department).then(function (_data) {
+        log.logMsg('Success with command')
+
+
+        $mdDialog.show(
+          $mdDialog.alert()
+            .parent(angular.element(document.querySelector('body')))
+            .clickOutsideToClose(true)
+            .title('Success')
+            .textContent('Thank you.  Your order has been scanned and updated successfully')
+            .ok('Ok!')
+        ).then(function () {
+          settings.current_user = ''
+          vm.change_state('scan home')
+        });
+
+
+      }, function (err) {
+        log.logMsg('ERROR >> Error with command ' + err.statusText)
+        vm.errMsg = 'Error trying to send order update ' + err.statusText
+      })
+}
     //Command(s) - send command to Server to update Order
     vm.sendCommand = function (command, outDepartment) {
       orderconfig.sendCommand(vm.current_order.orderid, command, outDepartment)
